@@ -1,104 +1,119 @@
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-import AddCustomer from "./AddCustomer";
-import CustomerQR from "./CustomerQR";
-import PurchaseButton from "./PurchaseButton";
 
-export const dynamic = "force-dynamic";
-
-export default async function AdminPage() {
-  const { data: customers, error } = await supabase
-    .from("customers")
-    .select("*")
-    .order("id", { ascending: false });
-
-  if (error) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl font-bold text-red-600">
-          Database Error
-        </h1>
-      </main>
-    );
-  }
-
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-orange-50 p-6">
-      <div className="max-w-6xl mx-auto">
+    <main className="min-h-screen bg-[#F7F3ED]">
 
-        <h1 className="text-4xl font-bold mb-8">
-          ☕ HAYK Loyalty Admin
-        </h1>
+      {/* Hero */}
 
-        <AddCustomer />
+      <section className="max-w-7xl mx-auto px-8 py-24 flex flex-col lg:flex-row items-center justify-between gap-16">
 
-        <div className="space-y-6">
+        <div className="max-w-xl">
 
-          {customers?.map((customer) => (
+          <p className="text-[#C66A1C] font-bold tracking-[6px] uppercase">
+            Premium Coffee Loyalty
+          </p>
 
-            <div
-              key={customer.id}
-              className="bg-white rounded-3xl shadow-lg p-6 flex justify-between"
+          <h1 className="font-[var(--font-playfair)] text-6xl lg:text-7xl font-bold mt-6 leading-tight">
+            Every Coffee
+            <br />
+            Brings You
+            <span className="text-[#C66A1C]"> Closer.</span>
+          </h1>
+
+          <p className="mt-8 text-xl text-gray-600 leading-9">
+            Join the HAYK Loyalty Club and collect points with every coffee.
+            Enjoy rewards, exclusive offers and a premium coffee experience.
+          </p>
+
+          <div className="flex gap-4 mt-10">
+
+            <Link
+              href="/admin"
+              className="primary-btn"
             >
+              Open Admin
+            </Link>
 
-              <div>
+            <Link
+              href="/scan"
+              className="border border-[#C66A1C] rounded-2xl px-8 py-4 font-bold text-[#C66A1C] hover:bg-[#C66A1C] hover:text-white transition"
+            >
+              Scan QR
+            </Link>
 
-                <h2 className="text-2xl font-bold">
-                  {customer.NAME}
-                </h2>
-
-                <p className="text-gray-500 mt-1">
-                  📞 {customer.PHONE}
-                </p>
-
-                <div className="mt-4 flex gap-8">
-
-                  <div>
-                    <p className="text-gray-500">
-                      Drinks
-                    </p>
-
-                    <p className="text-3xl font-bold text-orange-600">
-                      {customer.DRINKS ?? 0}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-gray-500">
-                      Points
-                    </p>
-
-                    <p className="text-3xl font-bold text-yellow-600">
-                      {customer.points ?? 0}
-                    </p>
-                  </div>
-
-                </div>
-
-                <div className="flex gap-3 mt-6">
-
-                  <Link
-                    href={`/customer/${customer.id}`}
-                    className="bg-black text-white px-5 py-3 rounded-xl"
-                  >
-                    Open
-                  </Link>
-
-                  <PurchaseButton id={customer.id} />
-
-                </div>
-
-              </div>
-
-              <CustomerQR id={customer.id} />
-
-            </div>
-
-          ))}
+          </div>
 
         </div>
 
-      </div>
+        <div className="glass rounded-[40px] p-10 shadow-soft">
+
+          <div className="text-[150px] text-center">
+            ☕
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* Features */}
+
+      <section className="max-w-7xl mx-auto px-8 pb-24">
+
+        <div className="grid md:grid-cols-3 gap-8">
+
+          <div className="glass rounded-3xl p-8">
+
+            <div className="text-5xl mb-6">
+              ☕
+            </div>
+
+            <h2 className="text-2xl font-bold mb-3">
+              Collect Drinks
+            </h2>
+
+            <p className="text-gray-600 leading-8">
+              Every purchase is automatically saved to your loyalty account.
+            </p>
+
+          </div>
+
+          <div className="glass rounded-3xl p-8">
+
+            <div className="text-5xl mb-6">
+              ⭐
+            </div>
+
+            <h2 className="text-2xl font-bold mb-3">
+              Earn Points
+            </h2>
+
+            <p className="text-gray-600 leading-8">
+              Every coffee brings you closer to exclusive rewards.
+            </p>
+
+          </div>
+
+          <div className="glass rounded-3xl p-8">
+
+            <div className="text-5xl mb-6">
+              🎁
+            </div>
+
+            <h2 className="text-2xl font-bold mb-3">
+              Free Coffee
+            </h2>
+
+            <p className="text-gray-600 leading-8">
+              Reach your goal and redeem your complimentary coffee.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
     </main>
   );
 }
