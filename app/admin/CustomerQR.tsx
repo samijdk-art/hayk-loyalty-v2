@@ -1,26 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { QRCodeCanvas } from "qrcode.react";
-
 export default function CustomerQR({
   id,
 }: {
   id: string;
 }) {
-  const [url, setUrl] = useState("");
+  const customerUrl = `https://YOUR-DOMAIN.vercel.app/customer/${id}`;
 
-  useEffect(() => {
-    setUrl(`${window.location.origin}/customer/${id}`);
-  }, [id]);
-
-  if (!url) return null;
+  const qrUrl =
+    "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=" +
+    encodeURIComponent(customerUrl);
 
   return (
-    <div className="mt-4">
-      <QRCodeCanvas
-        value={url}
-        size={150}
+    <div className="mt-4 text-center">
+      <img
+        src={qrUrl}
+        alt="Customer QR"
+        width={150}
+        height={150}
+        className="rounded-lg border"
       />
 
       <p className="text-xs mt-2 text-gray-500">
