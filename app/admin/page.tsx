@@ -3,10 +3,13 @@ import { supabase } from "@/lib/supabase";
 import AddCustomer from "./AddCustomer";
 import CustomerQR from "./CustomerQR";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const { data: customers, error } = await supabase
     .from("customers")
-    .select("*");
+    .select("*")
+    .order("id", { ascending: false });
 
   if (error) {
     console.log("ADMIN ERROR:", error);
