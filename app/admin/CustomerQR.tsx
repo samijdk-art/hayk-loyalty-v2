@@ -5,7 +5,7 @@ export default function CustomerQR({
 }: {
   id: string;
 }) {
-  const customerUrl = `https://YOUR-DOMAIN.vercel.app/customer/${id}`;
+  const customerUrl = `https://hayk-loyalty-v2-nine.vercel.app/customer/${id}`;
 
   const qrUrl =
     "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=" +
