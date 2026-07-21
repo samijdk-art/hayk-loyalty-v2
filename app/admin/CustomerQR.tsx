@@ -8,7 +8,7 @@ export default function CustomerQR({
   const customerUrl = `https://hayk-loyalty-v2-nine.vercel.app/customer/${id}`;
 
   const qrUrl =
-    "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=" +
+    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
     encodeURIComponent(customerUrl);
 
   return (
