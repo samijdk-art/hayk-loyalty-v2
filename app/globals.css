@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f5f2;
-  --foreground: #1f1f1f;
+  --background: #151312;
+  --foreground: #f5f3ef;
 }
 
 *,
@@ -23,7 +23,8 @@ body {
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at top, #3b2b22 0%, #1d1816 40%, #111111 100%);
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -35,6 +36,11 @@ h2,
 h3,
 .brand-title {
   font-family: var(--font-playfair), serif;
+  color: #f8f5ef;
+}
+
+p {
+  color: #d6d0c8;
 }
 
 a {
@@ -44,7 +50,11 @@ a {
 
 button {
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all .25s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
 }
 
 img {
@@ -52,14 +62,68 @@ img {
   height: auto;
 }
 
+input,
+textarea,
+select {
+  background: #262220;
+  color: #f5f3ef;
+  border: 1px solid #4b423d;
+  border-radius: 16px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #a59b93;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #b68b4a;
+  box-shadow: 0 0 0 4px rgba(182,139,74,.18);
+}
+
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 18px;
+  background: rgba(33, 29, 27, .82);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 24px;
 }
 
 .shadow-soft {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.45);
+}
+
+.card-dark {
+  background: #1f1b19;
+  border: 1px solid #36302d;
+  border-radius: 24px;
+}
+
+.gold {
+  color: #d8b46a;
+}
+
+.muted {
+  color: #b7aea5;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #171412;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5a4735;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8c6d4c;
 }
