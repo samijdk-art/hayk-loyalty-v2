@@ -19,15 +19,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html
       lang="en"
       className={`${inter.variable} ${playfair.variable}`}
     >
-      <body className="bg-[#F7F3ED] text-[#3A2C22] font-sans">
+      <body>
         {children}
       </body>
     </html>
