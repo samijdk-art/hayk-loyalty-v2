@@ -3,32 +3,42 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
+  const [branch, setBranch] = useState("Bamland");
   const [loading, setLoading] = useState(false);
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     setLoading(true);
 
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone }),
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          phone,
+          branch,
+        }),
       });
 
       const result = await res.json();
 
       if (!res.ok) {
-        alert(result.error || "Customer not found");
+        alert(result.error || "Registration failed");
         return;
       }
+
+      alert("Welcome to HAYK Loyalty Club!");
 
       router.push(`/customer/${result.customer.id}`);
     } catch {
@@ -39,42 +49,88 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F8F6F2] flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8">
+    <main className="min-h-screen flex items-center justify-center px-6 py-12">
 
-        <h1 className="text-4xl font-bold text-center text-[#3A2414]">
-          HAYK
-        </h1>
+      <div className="w-full max-w-lg">
 
-        <p className="text-center text-gray-500 mt-2">
-          Customer Login
-        </p>
+        <div className="glass shadow-soft p-10">
 
-        <form onSubmit={handleLogin} className="mt-8 space-y-6">
+          <div className="text-center">
 
-          <div>
-            <label className="block mb-2 font-medium">
-              Mobile Number
-            </label>
+            <p className="tracking-[8px] uppercase text-amber-400 text-sm font-semibold">
+              HAYK
+            </p>
+
+            <h1 className="text-4xl font-bold text-white mt-4">
+              Join Loyalty Club
+            </h1>
+
+            <p className="text-stone-400 mt-3">
+              Create your account and start collecting rewards.
+            </p>
+
+          </div>
+
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 mt-10"
+          >
+
+            <div className="grid grid-cols-2 gap-4">
+
+              <input
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+
+              <input
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+
+            </div>
 
             <input
+              type="tel"
+              placeholder="09xxxxxxxxx"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="w-full border rounded-xl p-3"
             />
-          </div>
+
+            <select
+              value={branch}
+              onChange={(e) => setBranch(e.target.value)}
+            >
+              <option value="Bamland">Bamland</option>
+              <option value="Sadeghieh">Sadeghieh</option>
+            </select>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="gold-button w-full py-4 disabled:opacity-50"
+            >
+              {loading ? "Creating Account..." : "Join Loyalty Club"}
+            </button>
+
+          </form>
 
           <button
-            disabled={loading}
-            className="w-full bg-[#3A2414] text-white rounded-xl py-4 font-semibold"
+            onClick={() => router.push("/login")}
+            className="dark-button w-full py-4 mt-5"
           >
-            {loading ? "Loading..." : "Login"}
+            Already have an account? Login
           </button>
 
-        </form>
+        </div>
 
       </div>
+
     </main>
   );
 }

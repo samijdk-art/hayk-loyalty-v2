@@ -40,45 +40,78 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F8F6F2] flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8">
+    <main className="min-h-screen flex items-center justify-center px-6 py-12">
 
-        <h1 className="text-4xl font-bold text-center text-[#3A2414]">
-          HAYK
-        </h1>
+      <div className="w-full max-w-md">
 
-        <p className="text-center text-gray-500 mt-2">
-          Customer Login
-        </p>
+        <div className="glass shadow-soft p-10">
 
-        <form onSubmit={handleLogin} className="mt-8 space-y-6">
-
-          <div>
-            <label className="block mb-2 font-medium">
-              Mobile Number
-            </label>
-
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              placeholder="09xxxxxxxxx"
-              className="w-full border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#3A2414]"
-            />
+          <div className="flex justify-center mb-8">
+            <div className="w-20 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-[#3A2414] hover:bg-[#4B2F1A] text-white rounded-xl py-4 font-semibold disabled:opacity-50"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
+          <p className="text-center tracking-[8px] uppercase text-amber-400 text-sm font-semibold">
+            HAYK
+          </p>
 
-        </form>
+          <h1 className="text-center text-4xl font-bold mt-4 text-white">
+            Welcome Back
+          </h1>
+
+          <p className="text-center text-stone-300 mt-3">
+            Login to your loyalty account
+          </p>
+
+          <form
+            onSubmit={handleLogin}
+            className="mt-10 space-y-6"
+          >
+
+            <div>
+
+              <label className="block mb-3 text-sm text-stone-300 font-medium">
+                Mobile Number
+              </label>
+
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                placeholder="09xxxxxxxxx"
+              />
+
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="gold-button w-full py-4 disabled:opacity-50"
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
+
+          </form>
+
+          <div className="mt-10 border-t border-white/10 pt-6 text-center">
+
+            <p className="text-sm text-stone-400">
+              New to HAYK?
+            </p>
+
+            <button
+              onClick={() => router.push("/register")}
+              className="mt-4 dark-button w-full py-4"
+            >
+              Create Account
+            </button>
+
+          </div>
+
+        </div>
 
       </div>
+
     </main>
   );
 }
