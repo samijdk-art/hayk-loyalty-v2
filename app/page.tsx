@@ -47,7 +47,7 @@ export default function Home() {
         </Link>
 
         <Link
-          href="/admin"
+          href="/admin/login"
           className="block w-full bg-black hover:bg-neutral-800 transition text-white text-center py-4 rounded-2xl font-semibold shadow-lg"
         >
           👨‍💼 Staff / Admin
