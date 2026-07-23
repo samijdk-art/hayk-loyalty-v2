@@ -4,7 +4,6 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#120d08] via-[#1d140d] to-[#2c1c11] flex items-center justify-center px-6 py-12 overflow-hidden relative">
 
-      {/* Background Glow */}
       <div className="absolute w-[500px] h-[500px] bg-amber-500/10 blur-[180px] rounded-full top-[-120px] left-[-120px]" />
       <div className="absolute w-[400px] h-[400px] bg-orange-400/10 blur-[180px] rounded-full bottom-[-100px] right-[-100px]" />
 
@@ -46,7 +45,7 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/admin/login"
+              href="/admin"
               className="block w-full rounded-2xl border border-white/10 bg-black/40 py-4 text-center font-semibold text-stone-200 transition duration-300 hover:bg-black/60"
             >
               👨‍💼 Staff / Admin
