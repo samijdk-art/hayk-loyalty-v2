@@ -1,18 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
-  if (!req.nextUrl.pathname.startsWith("/admin")) {
+export function middleware(request: NextRequest) {
+  if (!request.nextUrl.pathname.startsWith("/admin")) {
     return NextResponse.next();
   }
 
-  const auth = req.headers.get("authorization");
+  const auth = request.headers.get("authorization");
 
   if (auth) {
     const [, encoded] = auth.split(" ");
     const decoded = atob(encoded);
-    const [, password] = decoded.split(":");
 
-    if (password === process.env.ADMIN_PASSWORD) {
+    if (decoded === "admin:hayk2026") {
       return NextResponse.next();
     }
   }
@@ -20,7 +20,7 @@ export function middleware(req: NextRequest) {
   return new NextResponse("Authentication required", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="Admin"',
+      "WWW-Authenticate": 'Basic realm="HAYK Admin"',
     },
   });
 }
