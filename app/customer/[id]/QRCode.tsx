@@ -7,22 +7,27 @@ export default function QRCode({
 }: {
   id: string;
 }) {
-  const url = `http://localhost:3000/customer/${id}`;
+
+  const url =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/customer/${id}`
+      : "";
 
   return (
-    <div className="mt-8 text-center">
+    <div className="mt-8 flex flex-col items-center">
 
-      <h3 className="font-bold text-lg mb-4">
-        Customer QR Code
-      </h3>
+      <div className="bg-white rounded-3xl shadow-lg p-6">
 
-      <QRCodeCanvas
-        value={url}
-        size={220}
-      />
+        <QRCodeCanvas
+          value={url}
+          size={220}
+          includeMargin
+        />
 
-      <p className="mt-3 text-sm text-gray-500">
-        Scan to open customer profile
+      </div>
+
+      <p className="mt-4 text-gray-500 text-sm">
+        Scan to open your loyalty card
       </p>
 
     </div>

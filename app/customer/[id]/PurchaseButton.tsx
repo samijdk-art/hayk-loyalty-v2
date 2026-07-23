@@ -3,33 +3,24 @@
 import { useState } from "react";
 
 export default function PurchaseButton({
-  id
+  id,
 }: {
-  id: string
+  id: string;
 }) {
 
   const [loading, setLoading] = useState(false);
-
 
   async function addPurchase() {
 
     setLoading(true);
 
-    const res = await fetch("/api/purchase", {
+    await fetch("/api/purchase", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        id
-      })
+      body: JSON.stringify({ id }),
     });
-
-
-    const result = await res.json();
-
-    console.log("PURCHASE RESULT:", result);
-
 
     setLoading(false);
 
@@ -37,28 +28,25 @@ export default function PurchaseButton({
 
   }
 
-
   return (
-
     <button
       onClick={addPurchase}
       disabled={loading}
       className="
-      mt-8
-      w-full
-      bg-black
-      text-white
-      rounded-2xl
-      py-4
-      text-lg
-      font-bold
+        mt-8
+        w-full
+        rounded-2xl
+        bg-[#3A2414]
+        hover:bg-[#52331D]
+        text-white
+        py-4
+        font-bold
+        text-lg
+        shadow-lg
+        transition
       "
     >
-
-      {loading ? "Saving..." : "+ Add Purchase"}
-
+      {loading ? "Saving..." : "☕ Add Coffee"}
     </button>
-
   );
-
 }

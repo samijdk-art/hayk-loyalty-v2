@@ -1,65 +1,63 @@
-import { supabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
-
+import { supabaseAdmin } from "@/lib/supabase-admin";
 
 export async function POST(req: Request) {
+  try {
+    const { id } = await req.json();
 
-  console.log("API START");
+    if (!id) {
+      return NextResponse.json(
+        { error: "Customer ID is required." },
+        { status: 400 }
+      );
+    }
 
+    // دریافت اطلاعات مشتری
+    const { data: customer, error } = await supabaseAdmin
+      .from("customers")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-  const { id } = await req.json();
+    if (error || !customer) {
+      return NextResponse.json(
+        { error: "Customer not found." },
+        { status: 404 }
+      );
+    }
 
-  console.log("ID:", id);
+    const currentDrinks = Number(customer.drinks ?? customer.DRINKS ?? 0);
+    const currentPoints = Number(customer.points ?? 0);
 
+    const { data, error: updateError } = await supabaseAdmin
+      .from("customers")
+      .update({
+        drinks: currentDrinks + 1,
+        DRINKS: currentDrinks + 1,
+        points: currentPoints + 1,
+      })
+      .eq("id", id)
+      .select()
+      .single();
 
-  const { data: customer, error } = await supabase
-    .from("customers")
-    .select("*")
-    .eq("id", id)
-    .single();
+    if (updateError) {
+      return NextResponse.json(
+        { error: updateError.message },
+        { status: 500 }
+      );
+    }
 
+    return NextResponse.json({
+      success: true,
+      customer: data,
+    });
 
-  console.log("CUSTOMER:", customer);
-  console.log("ERROR:", error);
-
-
-  if (!customer) {
+  } catch (error) {
+    console.error(error);
 
     return NextResponse.json(
-      {
-        error: "Customer not found"
-      },
-      {
-        status: 404
-      }
+      { error: "Internal Server Error" },
+      { status: 500 }
     );
-
   }
-
-
-  const { data, error: updateError } = await supabase
-    .from("customers")
-    .update({
-
-      DRINKS: Number(customer.DRINKS || 0) + 1,
-
-      points: Number(customer.points || 0) + 1
-
-    })
-    .eq("id", id)
-    .select()
-    .single();
-
-
-
-  console.log("UPDATED:", data);
-  console.log("UPDATE ERROR:", updateError);
-
-
-
-  return NextResponse.json({
-    data,
-    updateError
-  });
-
 }
